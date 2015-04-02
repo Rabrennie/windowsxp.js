@@ -26,4 +26,4 @@ Javascript library for creating Windows XP like windows in the browser
 </script>
 ```
 
-*Please not this is a work in progress.
+*Please note this is a work in progress.
