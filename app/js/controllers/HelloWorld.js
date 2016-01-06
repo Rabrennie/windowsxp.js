@@ -1,5 +1,7 @@
 import module from '../module'
 
 module.controller('HelloWorld', ($scope) => {
-  $scope.text = 'Hello World'
+  $scope.title = 'Hello World';
+  $scope.content = 'Hello World';
+
 });

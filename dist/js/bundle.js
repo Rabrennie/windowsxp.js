@@ -5,7 +5,9 @@ require('./controllers/HelloWorld');
 
 require('./directives/Window');
 
-},{"./controllers/HelloWorld":2,"./directives/Window":3}],2:[function(require,module,exports){
+require('./directives/helloworld');
+
+},{"./controllers/HelloWorld":2,"./directives/Window":3,"./directives/helloworld":4}],2:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -15,10 +17,11 @@ var _module3 = _interopRequireDefault(_module2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _module3.default.controller('HelloWorld', function ($scope) {
-  $scope.text = 'Hello World';
+  $scope.title = 'Hello World';
+  $scope.content = 'Hello World';
 });
 
-},{"../module":4}],3:[function(require,module,exports){
+},{"../module":5}],3:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -29,13 +32,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _module3.default.directive('window', function () {
   return {
+    restrict: 'E',
+    replace: true,
     transclude: true,
-    template: '<div class="window">\n                \t<div class="title-bar">\n                \t\t<div class="title-bar-title">Hello World</div>\n                \t\t<div class="title-bar-close"></div>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>\n                \t<div class="content"><ng-transclude></ng-transclude></div>\n              </div>'
+    template: '<div class="window">\n                \t<div class="title-bar">\n                \t\t<div class="title-bar-title">{{ title }}</div>\n                \t\t<div class="title-bar-close"></div>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>\n                \t<div class="content"><ng-transclude></ng-transclude></div>\n              </div>',
+
+    link: function link(scope, element, attributes) {
+      scope.title = attributes.title;
+    }
+  };
+});
+
+},{"../module":5}],4:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('helloworld', function () {
+  return {
+    restrict: 'E',
+    controller: 'HelloWorld',
+    template: '<window title="{{ title }}">{{ content }}</window>'
 
   };
 });
 
-},{"../module":4}],4:[function(require,module,exports){
+},{"../module":5}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -57,7 +83,7 @@ _module.run(function ($rootScope) {
 
 exports.default = _module;
 
-},{"lodash":5}],5:[function(require,module,exports){
+},{"lodash":6}],6:[function(require,module,exports){
 (function (global){
 /**
  * @license
