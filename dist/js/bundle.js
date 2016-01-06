@@ -3,11 +3,13 @@
 
 require('./controllers/HelloWorld');
 
-require('./directives/Window');
+require('./directives/window');
+
+require('./directives/titlebar');
 
 require('./directives/helloworld');
 
-},{"./controllers/HelloWorld":2,"./directives/Window":3,"./directives/helloworld":4}],2:[function(require,module,exports){
+},{"./controllers/HelloWorld":2,"./directives/helloworld":3,"./directives/titlebar":4,"./directives/window":5}],2:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -21,29 +23,7 @@ _module3.default.controller('HelloWorld', function ($scope) {
   $scope.content = 'Hello World';
 });
 
-},{"../module":5}],3:[function(require,module,exports){
-'use strict';
-
-var _module2 = require('../module');
-
-var _module3 = _interopRequireDefault(_module2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_module3.default.directive('window', function () {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<div class="window">\n                \t<div class="title-bar">\n                \t\t<div class="title-bar-title">{{ title }}</div>\n                \t\t<div class="title-bar-close"></div>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>\n                \t<div class="content"><ng-transclude></ng-transclude></div>\n              </div>',
-
-    link: function link(scope, element, attributes) {
-      scope.title = attributes.title;
-    }
-  };
-});
-
-},{"../module":5}],4:[function(require,module,exports){
+},{"../module":6}],3:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -61,7 +41,84 @@ _module3.default.directive('helloworld', function () {
   };
 });
 
-},{"../module":5}],5:[function(require,module,exports){
+},{"../module":6}],4:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('titlebar', function ($document) {
+  return {
+    restrict: 'E',
+    require: '^window',
+    replace: true,
+    transclude: true,
+    template: '<div class="title-bar">\n                \t\t<div class="title-bar-title"><ng-transclude></ng-transclude></div>\n                \t\t<div class="title-bar-close"></div>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>',
+
+    link: function link(scope, element, attributes, windowCtrl) {
+      scope.title = attributes.title;
+      var startX = 0,
+          startY = 0,
+          x = 0,
+          y = 0;
+
+      element.on('mousedown', function (event) {
+        // Prevent default dragging of selected content
+        event.preventDefault();
+        startX = event.pageX - x;
+        startY = event.pageY - y;
+        $document.on('mousemove', mousemove);
+        $document.on('mouseup', mouseup);
+      });
+
+      function mousemove(event) {
+        y = event.pageY - startY;
+        x = event.pageX - startX;
+        windowCtrl.moveTo(x, y);
+      }
+
+      function mouseup() {
+        $document.off('mousemove', mousemove);
+        $document.off('mouseup', mouseup);
+      }
+    }
+  };
+});
+
+},{"../module":6}],5:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('window', function () {
+  return {
+    restrict: 'EA',
+    replace: true,
+    transclude: true,
+    template: '<div class="window">\n                \t<titlebar>{{title}}</titlebar>\n                \t<div class="content"><ng-transclude></ng-transclude></div>\n              </div>',
+
+    controller: ['$element', function ($element) {
+      this.moveTo = function (x, y) {
+        $element.css({
+          top: y + 'px',
+          left: x + 'px'
+        });
+      };
+    }],
+    link: function link(scope, element, attributes) {
+      scope.title = attributes.title;
+    }
+  };
+});
+
+},{"../module":6}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -83,7 +140,7 @@ _module.run(function ($rootScope) {
 
 exports.default = _module;
 
-},{"lodash":6}],6:[function(require,module,exports){
+},{"lodash":7}],7:[function(require,module,exports){
 (function (global){
 /**
  * @license

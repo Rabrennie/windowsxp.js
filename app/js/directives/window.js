@@ -2,20 +2,22 @@ import module from '../module'
 
 module.directive('window', () => {
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     transclude: true,
     template : `<div class="window">
-                	<div class="title-bar">
-                		<div class="title-bar-title">{{ title }}</div>
-                		<div class="title-bar-close"></div>
-                		<div class="title-bar-max"></div>
-                		<div class="title-bar-min"></div>
-                	</div>
+                	<titlebar>{{title}}</titlebar>
                 	<div class="content"><ng-transclude></ng-transclude></div>
               </div>`,
 
-
+    controller: ['$element', function($element) {
+      this.moveTo = (x, y) => {
+        $element.css({
+          top: y + 'px',
+          left:  x + 'px'
+        });
+      }
+    }],
     link: (scope, element, attributes) => {
       scope.title = attributes.title;
     }
