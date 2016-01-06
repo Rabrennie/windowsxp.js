@@ -13,7 +13,9 @@ require('./directives/helloworld');
 
 require('./directives/taskbar');
 
-},{"./controllers/HelloWorld":2,"./directives/helloworld":3,"./directives/taskbar":4,"./directives/titlebar":5,"./directives/titleclose":6,"./directives/window":7}],2:[function(require,module,exports){
+require('./directives/icon');
+
+},{"./controllers/HelloWorld":2,"./directives/helloworld":3,"./directives/icon":4,"./directives/taskbar":5,"./directives/titlebar":6,"./directives/titleclose":7,"./directives/window":8}],2:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -27,7 +29,7 @@ _module3.default.controller('HelloWorld', function ($scope) {
   $scope.content = 'Hello World';
 });
 
-},{"../module":8}],3:[function(require,module,exports){
+},{"../module":9}],3:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -45,7 +47,33 @@ _module3.default.directive('helloworld', function () {
   };
 });
 
-},{"../module":8}],4:[function(require,module,exports){
+},{"../module":9}],4:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('icon', function ($document, $compile) {
+  return {
+    restrict: 'E',
+    template: '<div class="icon"><img src="{{ icon }}"></div>',
+    link: function link(scope, element, attributes) {
+      scope.icon = attributes.src;
+
+      element.on('mousedown', function (event) {
+        // Prevent default dragging of selected content
+        var el = $compile('<helloworld></helloworld>')(scope);
+        element.parent().append(el);
+        event.preventDefault();
+      });
+    }
+  };
+});
+
+},{"../module":9}],5:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -61,7 +89,7 @@ _module3.default.directive('taskbar', function () {
   };
 });
 
-},{"../module":8}],5:[function(require,module,exports){
+},{"../module":9}],6:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -108,7 +136,7 @@ _module3.default.directive('titlebar', function ($document) {
   };
 });
 
-},{"../module":8}],6:[function(require,module,exports){
+},{"../module":9}],7:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -138,7 +166,7 @@ _module3.default.directive('titleclose', function ($document) {
   };
 });
 
-},{"../module":8}],7:[function(require,module,exports){
+},{"../module":9}],8:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -171,7 +199,7 @@ _module3.default.directive('window', function () {
   };
 });
 
-},{"../module":8}],8:[function(require,module,exports){
+},{"../module":9}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -193,7 +221,7 @@ _module.run(function ($rootScope) {
 
 exports.default = _module;
 
-},{"lodash":9}],9:[function(require,module,exports){
+},{"lodash":10}],10:[function(require,module,exports){
 (function (global){
 /**
  * @license
