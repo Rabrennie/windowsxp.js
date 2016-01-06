@@ -9,7 +9,9 @@ require('./directives/titlebar');
 
 require('./directives/helloworld');
 
-},{"./controllers/HelloWorld":2,"./directives/helloworld":3,"./directives/titlebar":4,"./directives/window":5}],2:[function(require,module,exports){
+require('./directives/taskbar');
+
+},{"./controllers/HelloWorld":2,"./directives/helloworld":3,"./directives/taskbar":4,"./directives/titlebar":5,"./directives/window":6}],2:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -23,7 +25,7 @@ _module3.default.controller('HelloWorld', function ($scope) {
   $scope.content = 'Hello World';
 });
 
-},{"../module":6}],3:[function(require,module,exports){
+},{"../module":7}],3:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -41,7 +43,23 @@ _module3.default.directive('helloworld', function () {
   };
 });
 
-},{"../module":6}],4:[function(require,module,exports){
+},{"../module":7}],4:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('taskbar', function () {
+  return {
+    restrict: 'E',
+    template: '<div class="task-bar"><div class="start-button">Start</div></div>'
+  };
+});
+
+},{"../module":7}],5:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -88,7 +106,7 @@ _module3.default.directive('titlebar', function ($document) {
   };
 });
 
-},{"../module":6}],5:[function(require,module,exports){
+},{"../module":7}],6:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -118,7 +136,7 @@ _module3.default.directive('window', function () {
   };
 });
 
-},{"../module":6}],6:[function(require,module,exports){
+},{"../module":7}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -140,7 +158,7 @@ _module.run(function ($rootScope) {
 
 exports.default = _module;
 
-},{"lodash":7}],7:[function(require,module,exports){
+},{"lodash":8}],8:[function(require,module,exports){
 (function (global){
 /**
  * @license
