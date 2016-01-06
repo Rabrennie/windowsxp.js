@@ -1,17 +1,16 @@
 import module from '../module'
 
-module.directive('icon', ($document, $compile) => {
+module.directive('icon', () => {
   return {
     restrict: 'E',
+    scope: false,
     template : `<div class="icon"><img src="{{ icon }}"></div>`,
     link: (scope, element, attributes) => {
       scope.icon = attributes.src;
-
-      element.on('mousedown', function(event) {
-        // Prevent default dragging of selected content
-        var el = $compile('<helloworld></helloworld>')(scope);
-        element.parent().append(el);
-        event.preventDefault();
+      scope.addWindow('test', 'test')
+      element.on('mousedown', () => {
+        scope.addWindow('test', 'test')
+        scope.$apply();
       });
 
     }
