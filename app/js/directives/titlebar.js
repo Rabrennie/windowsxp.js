@@ -18,7 +18,6 @@ module.directive('titlebar', ($document) => {
       scope.title = attributes.title;
       var startX = 0, startY = 0, x = 0, y = 0;
 
-
       element.on('mousedown', function(event) {
         // Prevent default dragging of selected content
         event.preventDefault();
