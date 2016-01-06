@@ -8,7 +8,7 @@ module.directive('titlebar', ($document) => {
     transclude: true,
     template : `<div class="title-bar">
                 		<div class="title-bar-title"><ng-transclude></ng-transclude></div>
-                		<div class="title-bar-close"></div>
+                		<titleclose></titleclose>
                 		<div class="title-bar-max"></div>
                 		<div class="title-bar-min"></div>
                 	</div>`,
