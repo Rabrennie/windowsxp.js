@@ -3,7 +3,9 @@
 
 require('./controllers/HelloWorld');
 
-},{"./controllers/HelloWorld":2}],2:[function(require,module,exports){
+require('./directives/Window');
+
+},{"./controllers/HelloWorld":2,"./directives/Window":3}],2:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -13,10 +15,27 @@ var _module3 = _interopRequireDefault(_module2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _module3.default.controller('HelloWorld', function ($scope) {
-  $scope.test = 'Test';
+  $scope.text = 'Hello World';
 });
 
-},{"../module":3}],3:[function(require,module,exports){
+},{"../module":4}],3:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('window', function () {
+  return {
+    transclude: true,
+    template: '<div class="window">\n                \t<div class="title-bar">\n                \t\t<div class="title-bar-title">Hello World</div>\n                \t\t<div class="title-bar-close"></div>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>\n                \t<div class="content"><ng-transclude></ng-transclude></div>\n              </div>'
+
+  };
+});
+
+},{"../module":4}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38,7 +57,7 @@ _module.run(function ($rootScope) {
 
 exports.default = _module;
 
-},{"lodash":4}],4:[function(require,module,exports){
+},{"lodash":5}],5:[function(require,module,exports){
 (function (global){
 /**
  * @license

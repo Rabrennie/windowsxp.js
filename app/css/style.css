@@ -1,79 +1,186 @@
-body,html {
-  font-family: 'Open Sans', sans-serif;
-  margin:0;
-  padding: 0;
-  background-color:#FFF;
+body {
+  min-width: 1000px;
+  min-height: 1000px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  font-family: "MS Reference", sans-serif;
 }
 
-#title {
-  width:100%;
-  text-align: center;
-  font-size: 40px;
-  margin: 40px 0px;
-}
-
-textarea {
-  resize: none;
-  width: 400px;
-  height:250px;
-  border:none;
-  border-bottom: 3px solid rgb(16,108,200);
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-}
-
-textarea::-webkit-input-placeholder::after {
-    content: "\A Each item seperated by a new line \A Ex. \A \A Cat \A Dog \A Elephant";
-}
-
-.container{
-  text-align: center
-}
-
-button[name=next], .choice, .same {
-  background: rgb(16,108,200);
-  color:rgba(255,255,255,0.87);
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-  padding: 2px 6px 3px;
-  border-radius: 3px;
-  width:200px;
-  height:50px;
-  border: none;
-  font-size: 20px;
-  margin: 30px;
-}
-
-.same {
-  width:460px;
-}
-
-.results {
-  width:400px;
-  margin: 0 auto;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-}
-
-.result {
-  display: flex;
-  border-bottom: 1px solid #F5F5F5;
-}
-
-.result span{
-  display: inline-block;
-  width:200px;
-  padding:10px 30px;
-}
-
-.result span:first-child{
-  border-right: 1px solid #F5F5F5;
-}
-
-.results .result:last-child{
-  border-bottom: 3px solid rgb(16,108,200);
-
-}
-
-#links {
+.window {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  width: 200px;
+  height: 200px;
+  background-color: #091E89;
+  overflow: hidden;
+  border-radius: 7px 7px 0 0;
+}
+
+.resize-e, .resize-w {
+  position: absolute;
+  width: 10px;
+  height: 190px;
+  top: 5px;
+}
+
+.resize-w {
+  left: -5px;
+  cursor: w-resize;
+}
+
+.resize-e {
+  right: -5px;
+  cursor: e-resize;
+}
+
+.resize-n, .resize-s {
+  position: absolute;
+  width: 190px;
+  height: 10px;
+  left: 5px;
+}
+
+.resize-s {
+  bottom: -5px;
+  cursor: s-resize;
+}
+
+.resize-n {
+  top: -5px;
+  cursor: n-resize;
+}
+
+.resize-ne, .resize-nw, .resize-se, .resize-sw {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.resize-ne {
+  cursor: ne-resize;
+}
+
+.resize-sw {
+  cursor: sw-resize;
+}
+
+.resize-nw {
+  cursor: nw-resize;
+}
+
+.resize-se {
+  cursor: se-resize;
+}
+
+.resize-nw, .resize-ne {
+  top: -5px;
+}
+
+.resize-ne, .resize-se {
+  right: 0px;
+}
+
+.resize-sw, .resize-se {
+  bottom: -5px;
+}
+
+.title-bar {
+  width: 200px;
+  height: 35px;
+  background: -webkit-linear-gradient(top, #4094ff 0%, #0056e4 13%, #0056e4 71%, #16428b 100%);
+  background: linear-gradient(to bottom, #4094ff 0%, #0056e4 13%, #0056e4 71%, #16428b 100%);
+}
+
+.title-bar .title-bar-title {
+  position: absolute;
+  top: 7.5px;
+  left: 7.5px;
+  color: white;
+  text-shadow: 1px 1px #10397E;
+  font-size: 15px;
+}
+
+.title-bar .title-bar-close, .title-bar .title-bar-max, .title-bar .title-bar-min {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 5px;
+  right: 5px;
+  border-radius: 2px;
+  border: 1px solid white;
+}
+
+.title-bar .title-bar-close {
+  background: -webkit-linear-gradient(315deg, #F1A689 0%, #C0442A 50%, #C2311E 100%);
+  background: linear-gradient(135deg, #F1A689 0%, #C0442A 50%, #C2311E 100%);
+}
+
+.title-bar-close:before, .title-bar-close:after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  background-color: white;
+  border-radius: 2px;
+  top: 9px;
+  box-shadow: 0 0 2px 0 #ccc;
+}
+
+.title-bar-close:before {
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  left: 3px;
+}
+
+.title-bar-close:after {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  right: 3px;
+}
+
+.title-bar .title-bar-max, .title-bar .title-bar-min {
+  background: -webkit-linear-gradient(315deg, #7EAED6 0%, #1B72FF 50%, #1655BE 100%);
+  background: linear-gradient(135deg, #7EAED6 0%, #1B72FF 50%, #1655BE 100%);
+}
+
+.title-bar .title-bar-max {
+  right: 30px;
+}
+
+.title-bar .title-bar-min {
+  right: 55px;
+}
+
+.title-bar-max:after, .title-bar-min:after {
+  content: '';
+  position: absolute;
+  box-shadow: 0 0 0px 0 #ccc;
+}
+
+.title-bar-max:after {
+  width: 10px;
+  height: 8px;
+  border: 1px solid white;
+  border-top: 3px solid white;
+  top: 4px;
+  left: 4px;
+}
+
+.title-bar-min:after {
+  width: 8px;
+  border-bottom: 2px solid white;
+  bottom: 4px;
+  left: 4px;
+}
+
+.window .content {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 10px;
+  height: 165px;
+  width: 196px;
+  left: 2px;
+  bottom: 3px;
+  background-color: white;
 }
