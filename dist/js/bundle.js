@@ -173,9 +173,10 @@ _module3.default.directive('icon', function () {
     template: '<div class="icon"><img src="{{ icon }}"></div>',
     link: function link(scope, element, attributes) {
       scope.icon = attributes.src;
-      scope.addWindow('test', 'test');
-      element.on('mousedown', function () {
-        scope.addWindow('test', 'test');
+      scope.addWindow('test', 'test', 'helloworld');
+
+      element.on('dblclick', function () {
+        scope.addWindow('test', 'test', 'helloworld');
         scope.$apply();
       });
     }

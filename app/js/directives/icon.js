@@ -7,9 +7,10 @@ module.directive('icon', () => {
     template : `<div class="icon"><img src="{{ icon }}"></div>`,
     link: (scope, element, attributes) => {
       scope.icon = attributes.src;
-      scope.addWindow('test', 'test')
-      element.on('mousedown', () => {
-        scope.addWindow('test', 'test')
+      scope.addWindow('test', 'test', 'helloworld')
+
+      element.on('dblclick', () => {
+        scope.addWindow('test', 'test', 'helloworld')
         scope.$apply();
       });
 
