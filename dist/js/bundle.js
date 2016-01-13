@@ -3,15 +3,23 @@
 
 require('./controllers/HelloWorld');
 
+require('./controllers/Window');
+
 require('./directives/window');
 
 require('./directives/titlebar');
 
-require('./directives/helloworld');
+require('./directives/titleclose');
 
 require('./directives/taskbar');
 
-},{"./controllers/HelloWorld":2,"./directives/helloworld":3,"./directives/taskbar":4,"./directives/titlebar":5,"./directives/window":6}],2:[function(require,module,exports){
+require('./directives/icon');
+
+require('./directives/helloworld');
+
+require('./directives/calculator.exe');
+
+},{"./controllers/HelloWorld":2,"./controllers/Window":3,"./directives/calculator.exe":4,"./directives/helloworld":5,"./directives/icon":6,"./directives/taskbar":7,"./directives/titlebar":8,"./directives/titleclose":9,"./directives/window":10}],2:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -21,11 +29,109 @@ var _module3 = _interopRequireDefault(_module2);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _module3.default.controller('HelloWorld', function ($scope) {
-  $scope.title = 'Hello World';
+  $scope.title = Math.random();
   $scope.content = 'Hello World';
+
+  $scope.test = function () {
+    $scope.content = 'rekt';
+    $scope.apply();
+  };
+  window.setInterval(function () {
+    $scope.title = Math.random();$scope.apply();
+  }, 33);
 });
 
-},{"../module":7}],3:[function(require,module,exports){
+},{"../module":11}],3:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.controller('WindowCtrl', function ($scope) {
+  $scope.windows = [];
+  $scope.addWindow = function (title, content) {
+    return $scope.windows.push({ content: content, title: title });
+  };
+});
+
+},{"../module":11}],4:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('calculator', function () {
+
+  return {
+    restrict: 'E',
+    replace: false,
+    scope: {
+      title: '@',
+      content: '@'
+    },
+    template: '<window title="{{ title }}">\n                  <input type="text" ng-model="display">\n                  <a href=\'#\' ng-repeat="button in buttons" ng-click="button.func()">{{ button.name }}</a>\n                </window>',
+    link: function link(scope) {
+      scope.buttons = [{ name: '+', func: function func() {
+          scope.addOperator('add');
+        } }, { name: '=', func: function func() {
+          scope.evaluate();
+        } }, { name: '-', func: function func() {
+          scope.addOperator('sub');
+        } }];
+
+      var _loop = function _loop(i) {
+        scope.buttons.push({ name: i, func: function func() {
+            scope.addToDisplay(i);
+          } });
+      };
+
+      for (var i = 0; i < 10; i++) {
+        _loop(i);
+      }
+
+      scope.addOperator = function (op) {
+        scope.buffer.push(scope.display);
+        scope.operator = op;
+        scope.reset = true;
+      };
+
+      scope.evaluate = function () {
+        var val1 = scope.buffer[scope.buffer.length - 1];
+        var val2 = scope.display;
+
+        if (scope.operator === 'add') {
+          scope.display = val1 + val2;
+        }
+        if (scope.operator === 'sub') {
+          scope.display = val1 - val2;
+        }
+        scope.buffer.push(scope.display);
+      };
+
+      scope.addToDisplay = function (n) {
+        if (scope.display === 0 || scope.reset) {
+          scope.display = n;
+          scope.reset = false;
+        } else {
+          scope.display = parseInt(scope.display + '' + n);
+        }
+      };
+
+      scope.reset = false;
+      scope.display = 0;
+      scope.buffer = [];
+      scope.operator = 'none';
+    }
+  };
+});
+
+},{"../module":11}],5:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -37,13 +143,47 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _module3.default.directive('helloworld', function () {
   return {
     restrict: 'E',
-    controller: 'HelloWorld',
-    template: '<window title="{{ title }}">{{ content }}</window>'
-
+    replace: false,
+    scope: {
+      title: '@',
+      content: '@'
+    },
+    template: '<window title="{{ title }}">{{ content }} <a href="#" ng-click="test()">test</a></window>',
+    link: function link(scope) {
+      scope.test = function () {
+        console.log('Test');
+      };
+    }
   };
 });
 
-},{"../module":7}],4:[function(require,module,exports){
+},{"../module":11}],6:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('icon', function () {
+  return {
+    restrict: 'E',
+    scope: false,
+    template: '<div class="icon"><img src="{{ icon }}"></div>',
+    link: function link(scope, element, attributes) {
+      scope.icon = attributes.src;
+      scope.addWindow('test', 'test', 'helloworld');
+
+      element.on('dblclick', function () {
+        scope.addWindow('test', 'test', 'helloworld');
+        scope.$apply();
+      });
+    }
+  };
+});
+
+},{"../module":11}],7:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -59,7 +199,7 @@ _module3.default.directive('taskbar', function () {
   };
 });
 
-},{"../module":7}],5:[function(require,module,exports){
+},{"../module":11}],8:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -74,7 +214,7 @@ _module3.default.directive('titlebar', function ($document) {
     require: '^window',
     replace: true,
     transclude: true,
-    template: '<div class="title-bar">\n                \t\t<div class="title-bar-title"><ng-transclude></ng-transclude></div>\n                \t\t<div class="title-bar-close"></div>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>',
+    template: '<div class="title-bar">\n                \t\t<div class="title-bar-title"><ng-transclude></ng-transclude></div>\n                \t\t<titleclose></titleclose>\n                \t\t<div class="title-bar-max"></div>\n                \t\t<div class="title-bar-min"></div>\n                \t</div>',
 
     link: function link(scope, element, attributes, windowCtrl) {
       scope.title = attributes.title;
@@ -106,7 +246,37 @@ _module3.default.directive('titlebar', function ($document) {
   };
 });
 
-},{"../module":7}],6:[function(require,module,exports){
+},{"../module":11}],9:[function(require,module,exports){
+'use strict';
+
+var _module2 = require('../module');
+
+var _module3 = _interopRequireDefault(_module2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_module3.default.directive('titleclose', function ($document) {
+  return {
+    restrict: 'E',
+    require: '^window',
+    template: '<div class="title-bar-close"></div>',
+    link: function link(scope, element, attributes, windowCtrl) {
+
+      element.on('mousedown', function (event) {
+        // Prevent default dragging of selected content
+        event.preventDefault();
+        $document.on('mouseup', mouseup);
+      });
+
+      function mouseup() {
+        windowCtrl.close();
+        $document.off('mouseup', mouseup);
+      }
+    }
+  };
+});
+
+},{"../module":11}],10:[function(require,module,exports){
 'use strict';
 
 var _module2 = require('../module');
@@ -129,6 +299,9 @@ _module3.default.directive('window', function () {
           left: x + 'px'
         });
       };
+      this.close = function () {
+        $element.remove();
+      };
     }],
     link: function link(scope, element, attributes) {
       scope.title = attributes.title;
@@ -136,7 +309,7 @@ _module3.default.directive('window', function () {
   };
 });
 
-},{"../module":7}],7:[function(require,module,exports){
+},{"../module":11}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -158,7 +331,7 @@ _module.run(function ($rootScope) {
 
 exports.default = _module;
 
-},{"lodash":8}],8:[function(require,module,exports){
+},{"lodash":12}],12:[function(require,module,exports){
 (function (global){
 /**
  * @license

@@ -17,6 +17,10 @@ module.directive('window', () => {
           left:  x + 'px'
         });
       }
+      this.close = () => {
+        $element.remove();
+      }
+
     }],
     link: (scope, element, attributes) => {
       scope.title = attributes.title;

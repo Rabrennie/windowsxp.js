@@ -210,4 +210,17 @@ body {
   box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
 background: linear-gradient(to bottom, #62af69 0%,#62af69 5%,#62af69 5%,#62af69 6%,#2d9327 16%,#2d9327 49%,#2d9327 61%,#2d9327 65%,#2d9327 67%,#2d9327 67%,#2d9327 70%,#2d9327 70%,#2d9327 71%,#2d9327 71%,#2d9327 71%,#2d9327 72%,#25752e 89%);
   border-radius: 0px 15px 15px 0px;
+
+  font-size: 25px;
+  line-height: 1.5;
+  color: white;
+  text-shadow: 2px 2px #404040;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px; 
 }

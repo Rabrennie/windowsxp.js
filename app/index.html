@@ -8,8 +8,10 @@
     <script src="js/bundle.js"></script>
     <link rel="stylesheet" href="./css/style.css" media="screen" title="no title" charset="utf-8">
   </head>
-  <body>
-    <helloworld></helloworld>
+  <body ng-controller="WindowCtrl">
+     <helloworld ng-repeat="window in windows" title="{{ window.title }}" content="{{ window.content }}"></helloworld>
+     <calculator title="Calculator"></calculator>
     <taskbar></taskbar>
+    <icon src="http://i.imgur.com/tTVCMoy.jpg"></icon>
   </body>
 </html>
