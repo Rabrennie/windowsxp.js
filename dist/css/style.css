@@ -221,6 +221,18 @@ background: linear-gradient(to bottom, #62af69 0%,#62af69 5%,#62af69 5%,#62af69 
 }
 
 .icon {
-  width: 20px;
-  height: 20px; 
+  margin: 10px;
+  width: 100px;
+  min-height: 20px;
+  display: inline-block;
+  text-align: center;
+}
+.icon-image {
+  width: 70%;
+}
+
+.icon-caption {
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 2px #404040;
 }
